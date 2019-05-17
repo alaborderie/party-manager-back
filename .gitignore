@@ -27,10 +27,6 @@ party_manager_back-*.tar
 # this depending on your deployment strategy.
 /priv/static/
 
-
-# Don't push to git my secret files!
-/config/
-
 # Jetbrains IDEA
 /.idea/
 /*.iml
