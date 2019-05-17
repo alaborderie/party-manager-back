@@ -6,9 +6,9 @@ defmodule PartyManagerBack.PartyTest do
   describe "users" do
     alias PartyManagerBack.Party.User
 
-    @valid_attrs %{}
-    @update_attrs %{}
-    @invalid_attrs %{}
+    @valid_attrs %{first_name: "some first_name", last_name: "some last_name", email: "some email"}
+    @update_attrs %{first_name: "some updated first_name", last_name: "some updated last_name", email: "some updated email"}
+    @invalid_attrs %{first_name: nil, last_name: nil, email: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -31,6 +31,9 @@ defmodule PartyManagerBack.PartyTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Party.create_user(@valid_attrs)
+      assert user.first_name == "some first_name"
+      assert user.last_name == "some last_name"
+      assert user.email == "some email"
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -40,6 +43,9 @@ defmodule PartyManagerBack.PartyTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Party.update_user(user, @update_attrs)
+      assert user.first_name == "some updated first_name"
+      assert user.last_name == "some updated last_name"
+      assert user.email == "some updated email"
     end
 
     test "update_user/2 with invalid data returns error changeset" do

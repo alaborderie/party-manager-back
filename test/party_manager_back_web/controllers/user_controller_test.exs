@@ -5,12 +5,16 @@ defmodule PartyManagerBackWeb.UserControllerTest do
   alias PartyManagerBack.Party.User
 
   @create_attrs %{
-
+    first_name: "some first_name",
+    last_name: "some last_name",
+    email: "some email"
   }
   @update_attrs %{
-
+    first_name: "some updated first_name",
+    last_name: "some updated last_name",
+    email: "some updated email"
   }
-  @invalid_attrs %{}
+  @invalid_attrs %{first_name: nil, last_name: nil, email: nil}
 
   def fixture(:user) do
     {:ok, user} = Party.create_user(@create_attrs)
@@ -36,7 +40,10 @@ defmodule PartyManagerBackWeb.UserControllerTest do
       conn = get(conn, Routes.user_path(conn, :show, id))
 
       assert %{
-               "id" => id
+               "id" => id,
+               "first_name" => "some first_name",
+               "last_name" => "some last_name",
+               "email" => "some email"
              } = json_response(conn, 200)["data"]
     end
 
@@ -56,7 +63,10 @@ defmodule PartyManagerBackWeb.UserControllerTest do
       conn = get(conn, Routes.user_path(conn, :show, id))
 
       assert %{
-               "id" => id
+               "id" => id,
+               "first_name" => "some updated first_name",
+               "last_name" => "some updated last_name",
+               "email" => "some updated email"
              } = json_response(conn, 200)["data"]
     end
 
