@@ -20,4 +20,6 @@ defmodule PartyManagerBackWeb.Router do
 
   resources "/users", PartyManagerBackWeb.UserController, except: [:new, :edit]
   resources "/groups", PartyManagerBackWeb.GroupController, except: [:new, :edit]
+  resources "/events", PartyManagerBackWeb.EventController, except: [:new, :edit]
+  resources "/events_users", PartyManagerBackWeb.Events_UsersController, except: [:new, :edit]
 end

@@ -197,4 +197,196 @@ defmodule PartyManagerBack.Party do
   def change_group(%Group{} = group) do
     Group.changeset(group, %{})
   end
+
+  alias PartyManagerBack.Party.Event
+
+  @doc """
+  Returns the list of events.
+
+  ## Examples
+
+      iex> list_events()
+      [%Event{}, ...]
+
+  """
+  def list_events do
+    Repo.all(Event)
+  end
+
+  @doc """
+  Gets a single event.
+
+  Raises `Ecto.NoResultsError` if the Event does not exist.
+
+  ## Examples
+
+      iex> get_event!(123)
+      %Event{}
+
+      iex> get_event!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_event!(id), do: Repo.get!(Event, id)
+
+  @doc """
+  Creates a event.
+
+  ## Examples
+
+      iex> create_event(%{field: value})
+      {:ok, %Event{}}
+
+      iex> create_event(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_event(attrs \\ %{}) do
+    %Event{}
+    |> Event.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a event.
+
+  ## Examples
+
+      iex> update_event(event, %{field: new_value})
+      {:ok, %Event{}}
+
+      iex> update_event(event, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_event(%Event{} = event, attrs) do
+    event
+    |> Event.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Event.
+
+  ## Examples
+
+      iex> delete_event(event)
+      {:ok, %Event{}}
+
+      iex> delete_event(event)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_event(%Event{} = event) do
+    Repo.delete(event)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking event changes.
+
+  ## Examples
+
+      iex> change_event(event)
+      %Ecto.Changeset{source: %Event{}}
+
+  """
+  def change_event(%Event{} = event) do
+    Event.changeset(event, %{})
+  end
+
+  alias PartyManagerBack.Party.Events_Users
+
+  @doc """
+  Returns the list of events_users.
+
+  ## Examples
+
+      iex> list_events_users()
+      [%Events_Users{}, ...]
+
+  """
+  def list_events_users do
+    Repo.all(Events_Users)
+  end
+
+  @doc """
+  Gets a single events__users.
+
+  Raises `Ecto.NoResultsError` if the Events  users does not exist.
+
+  ## Examples
+
+      iex> get_events__users!(123)
+      %Events_Users{}
+
+      iex> get_events__users!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_events__users!(id), do: Repo.get!(Events_Users, id)
+
+  @doc """
+  Creates a events__users.
+
+  ## Examples
+
+      iex> create_events__users(%{field: value})
+      {:ok, %Events_Users{}}
+
+      iex> create_events__users(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_events__users(attrs \\ %{}) do
+    %Events_Users{}
+    |> Events_Users.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a events__users.
+
+  ## Examples
+
+      iex> update_events__users(events__users, %{field: new_value})
+      {:ok, %Events_Users{}}
+
+      iex> update_events__users(events__users, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_events__users(%Events_Users{} = events__users, attrs) do
+    events__users
+    |> Events_Users.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Events_Users.
+
+  ## Examples
+
+      iex> delete_events__users(events__users)
+      {:ok, %Events_Users{}}
+
+      iex> delete_events__users(events__users)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_events__users(%Events_Users{} = events__users) do
+    Repo.delete(events__users)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking events__users changes.
+
+  ## Examples
+
+      iex> change_events__users(events__users)
+      %Ecto.Changeset{source: %Events_Users{}}
+
+  """
+  def change_events__users(%Events_Users{} = events__users) do
+    Events_Users.changeset(events__users, %{})
+  end
 end
