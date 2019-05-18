@@ -6,6 +6,16 @@ defmodule PartyManagerBackWeb.UserController do
 
   action_fallback PartyManagerBackWeb.FallbackController
 
+  @apidoc """
+  @api {get} /users Get list of users
+  @apiName GetUsers
+  @apiGroup Users
+
+  @apiSuccess {Object[]} data Data of response (Array of users)
+  @apiSuccess {String} data.first_name First name of user
+  @apiSuccess {String} data.last_name Last name of user
+  @apiSuccess {String} data.email Email of user
+  """
   def index(conn, _params) do
     users = Party.list_users()
     render(conn, "index.json", users: users)
