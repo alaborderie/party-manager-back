@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :party_manager_back, PartyManagerBack.Repo,
   username: "root",
-  password: "",
+  password: System.get_env("PARTY_MANAGER_DEV_DB_PASSWORD"),
   database: "party_manager_back_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
