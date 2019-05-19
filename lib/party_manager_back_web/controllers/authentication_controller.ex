@@ -15,7 +15,7 @@ defmodule PartyManagerBackWeb.AuthenticationController do
     else
       conn
       |> put_status(401)
-      |> text("Wrong password/email combination")
+      |> json(%{message: "Wrong password/email combination"})
     end
   end
 

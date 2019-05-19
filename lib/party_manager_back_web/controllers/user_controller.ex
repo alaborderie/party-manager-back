@@ -24,7 +24,7 @@ defmodule PartyManagerBackWeb.UserController do
     else
       conn
       |> put_status(401)
-      |> text("Admin role is required")
+      |> json(%{message: "Admin role is required"})
     end
   end
 
@@ -45,11 +45,28 @@ defmodule PartyManagerBackWeb.UserController do
   @apiSuccess {String} data.email Email of user
   """
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Party.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+    emailRegex = ~r/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])|(([a-z]|\d|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])([a-z]|\d|-|\.|_|~|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])*([a-z]|\d|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])))\.)+(([a-z]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])|(([a-z]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])([a-z]|\d|-|\.|_|~|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])*([a-z]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])))$/u
+    response =
+      cond do
+        !Regex.match?(emailRegex, user_params["email"]) ->
+          conn
+          |> put_status(:bad_request)
+          |> json(%{message: "Bad email format", error_field: "email"})
+        !Party.get_by_email(user_params["email"]) ->
+          conn
+          |> put_status(:conflict)
+          |> json(%{message: "User email #{user_params["email"]} already exists", error_field: "email"})
+        true -> nil
+      end
+    unless response do
+      with {:ok, %User{} = user} <- Party.create_user(user_params) do
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", Routes.user_path(conn, :show, user))
+        |> render("show.json", user: user)
+      end
+    else
+      response
     end
   end
 
@@ -94,7 +111,7 @@ defmodule PartyManagerBackWeb.UserController do
     else
       conn
       |> put_status(401)
-      |> text("You are not authorized to do that.")
+      |> json(%{message: "You are not authorized to do that."})
     end
   end
 
@@ -114,7 +131,7 @@ defmodule PartyManagerBackWeb.UserController do
     else
       conn
       |> put_status(401)
-      |> text("You are not authorized to do that.")
+      |> json(%{message: "You are not authorized to do that."})
     end
   end
 end
