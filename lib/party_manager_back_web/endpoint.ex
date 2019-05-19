@@ -40,7 +40,7 @@ defmodule PartyManagerBackWeb.Endpoint do
     key: "_party_manager_back_key",
     signing_salt: "IKAhtwWe"
 
-  plug CORSPlug, origin: [System.get_env("ORIGIN_URL")]
+  plug CORSPlug, origin: Application.get_env(:party_manager_back, PartyManagerBackWeb.Endpoint)[:origin]
 
   plug PartyManagerBackWeb.Router
 end

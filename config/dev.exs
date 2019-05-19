@@ -20,7 +20,8 @@ config :party_manager_back, PartyManagerBackWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: []
+  watchers: [],
+  origin: ["http://localhost:3000"]
 
 # ## SSL Support
 #
