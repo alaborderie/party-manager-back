@@ -5,7 +5,9 @@ defmodule PartyManagerBack.Repo.Migrations.CreateUser do
     create table(:users) do
       add :first_name, :string
       add :last_name, :string
-      add :email, :string
+      add :email, :string, unique: true, null: false
+      add :password, :string, null: false
+      add :is_admin, :boolean, default: false
 
       timestamps()
     end

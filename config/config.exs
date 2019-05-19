@@ -17,6 +17,14 @@ config :party_manager_back, PartyManagerBackWeb.Endpoint,
   render_errors: [view: PartyManagerBackWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: PartyManagerBack.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :party_manager_back, PartyManagerBack.Guardian,
+  issuer: "PartyManagerBack",
+  secret_key: "ZwWJtc0do7WOwoEqw6V/GB4UMOAsUgpYTWmPAtWtRmnIknCzxu/tcL0o6hBX8kr7"
+
+config :party_manager_back, PartyManagerBack.AuthAccessPipeline,
+  module: PartyManagerBack.Guardian,
+  error_handler: PartyManagerBack.AuthErrorHandler
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

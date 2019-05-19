@@ -38,6 +38,18 @@ defmodule PartyManagerBack.Party do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Get a user by his email.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+  """
+  def get_by_email(email) when is_nil(email) do
+    nil
+  end
+  def get_by_email(email) do
+    Repo.get_by!(User, email: email)
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples
