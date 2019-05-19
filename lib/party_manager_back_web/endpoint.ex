@@ -40,5 +40,7 @@ defmodule PartyManagerBackWeb.Endpoint do
     key: "_party_manager_back_key",
     signing_salt: "IKAhtwWe"
 
+  plug CORSPlug, origin: [System.get_env("ORIGIN_URL")]
+
   plug PartyManagerBackWeb.Router
 end
