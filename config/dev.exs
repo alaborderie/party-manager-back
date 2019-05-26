@@ -16,6 +16,7 @@ config :party_manager_back, PartyManagerBack.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :party_manager_back, PartyManagerBackWeb.Endpoint,
+  url: [host: "localhost", port: 4000],
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
