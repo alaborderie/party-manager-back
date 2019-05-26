@@ -10,6 +10,7 @@ defmodule PartyManagerBack.Repo.Migrations.CreateEvents do
       add :end_date, :date
       add :place, :string
       add :group, references(:groups, on_delete: :nothing)
+      add :creator, references(:users, on_delete: :nothing)
 
       timestamps()
     end

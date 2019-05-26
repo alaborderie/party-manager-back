@@ -18,7 +18,7 @@ defmodule PartyManagerBackWeb.UserController do
   """
   def index(conn, _params) do
     requesting_user = PartyManagerBack.Guardian.Plug.current_resource(conn)
-    if requesting_user.is_admin do
+    if (requesting_user != nil and requesting_user.is_admin) do
       users = Party.list_users()
       render(conn, "index.json", users: users)
     else
@@ -46,24 +46,23 @@ defmodule PartyManagerBackWeb.UserController do
   """
   def create(conn, %{"user" => user_params}) do
     emailRegex = ~r/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])|(([a-z]|\d|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])([a-z]|\d|-|\.|_|~|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])*([a-z]|\d|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])))\.)+(([a-z]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])|(([a-z]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])([a-z]|\d|-|\.|_|~|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])*([a-z]|[\x{00A0}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFEF}])))$/u
-    response =
-      cond do
-        !Regex.match?(emailRegex, user_params["email"]) ->
+    cond do
+      !Regex.match?(emailRegex, user_params["email"]) ->
+        conn
+        |> put_status(:bad_request)
+        |> json(%{message: "Bad email format", error_field: "email"})
+      !Party.get_by_email(user_params["email"]) ->
+        conn
+        |> put_status(:conflict)
+        |> json(%{message: "User email #{user_params["email"]} already exists", error_field: "email"})
+      true ->
+        with {:ok, %User{} = user} <- Party.create_user(user_params) do
           conn
-          |> put_status(:bad_request)
-          |> json(%{message: "Bad email format", error_field: "email"})
-        !Party.get_by_email(user_params["email"]) ->
-          conn
-          |> put_status(:conflict)
-          |> json(%{message: "User email #{user_params["email"]} already exists", error_field: "email"})
-        true ->
-          with {:ok, %User{} = user} <- Party.create_user(user_params) do
-            conn
-            |> put_status(:created)
-            |> put_resp_header("location", Routes.user_path(conn, :show, user))
-            |> render("show.json", user: user)
-          end
-      end
+          |> put_status(:created)
+          |> put_resp_header("location", Routes.user_path(conn, :show, user))
+          |> render("show.json", user: user)
+        end
+    end
   end
 
   @apidoc """
@@ -98,7 +97,7 @@ defmodule PartyManagerBackWeb.UserController do
   """
   def update(conn, %{"id" => id, "user" => user_params}) do
     requesting_user = PartyManagerBack.Guardian.Plug.current_resource(conn)
-    if requesting_user.is_admin or requesting_user.id == id do
+    if (requesting_user != nil and requesting_user.is_admin) or requesting_user.id == id do
       user = Party.get_user!(id)
 
       with {:ok, %User{} = user} <- Party.update_user(user, user_params) do
@@ -118,7 +117,7 @@ defmodule PartyManagerBackWeb.UserController do
   """
   def delete(conn, %{"id" => id}) do
     requesting_user = PartyManagerBack.Guardian.Plug.current_resource(conn)
-    if requesting_user.is_admin or requesting_user.id == id do
+    if (requesting_user != nil and requesting_user.is_admin) or requesting_user.id == id do
       user = Party.get_user!(id)
 
       with {:ok, %User{}} <- Party.delete_user(user) do

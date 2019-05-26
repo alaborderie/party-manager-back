@@ -10,6 +10,7 @@ defmodule PartyManagerBack.Party.Event do
     field :place, :string
     field :start_date, :date
     field :group, :id
+    field :creator, :id
 
     timestamps()
   end
@@ -17,7 +18,7 @@ defmodule PartyManagerBack.Party.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :description, :background_img, :start_date, :end_date, :place])
-    |> validate_required([:name, :description, :background_img, :start_date, :end_date, :place])
+    |> cast(attrs, [:name, :description, :background_img, :start_date, :end_date, :place, :group, :creator])
+    |> validate_required([:name, :description, :start_date, :end_date])
   end
 end

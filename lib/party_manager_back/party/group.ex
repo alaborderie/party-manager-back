@@ -14,6 +14,6 @@ defmodule PartyManagerBack.Party.Group do
   def changeset(group, attrs) do
     group
     |> cast(attrs, [:name, :description, :background_img])
-    |> validate_required([:name, :description, :background_img])
+    |> validate_required([:name, :description])
   end
 end

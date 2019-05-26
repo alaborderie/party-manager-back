@@ -76,19 +76,6 @@ defmodule PartyManagerBackWeb.GroupControllerTest do
     end
   end
 
-  describe "delete group" do
-    setup [:create_group]
-
-    test "deletes chosen group", %{conn: conn, group: group} do
-      conn = delete(conn, Routes.group_path(conn, :delete, group))
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.group_path(conn, :show, group))
-      end
-    end
-  end
-
   defp create_group(_) do
     group = fixture(:group)
     {:ok, group: group}

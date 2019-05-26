@@ -6,7 +6,7 @@ defmodule PartyManagerBack.PartyTest do
   describe "users" do
     alias PartyManagerBack.Party.User
 
-    @valid_attrs %{first_name: "some first_name", last_name: "some last_name", email: "some email"}
+    @valid_attrs %{first_name: "some first_name", last_name: "some last_name", email: "some email", password: "some password"}
     @update_attrs %{first_name: "some updated first_name", last_name: "some updated last_name", email: "some updated email"}
     @invalid_attrs %{first_name: nil, last_name: nil, email: nil}
 

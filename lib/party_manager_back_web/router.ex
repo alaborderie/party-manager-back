@@ -18,9 +18,9 @@ defmodule PartyManagerBackWeb.Router do
     pipe_through :api
     resources "/subscribe", UserController, only: [:create]
     resources "/login", AuthenticationController, only: [:create, :delete]
-    pipe_through :authenticated
+    if System.get_env("PARTY_MANAGER_PROD"), do: pipe_through :authenticated
     resources "/users", UserController, except: [:new, :edit, :create]
-    resources "/groups", GroupController, except: [:new, :edit]
+    resources "/groups", GroupController, except: [:new, :edit, :delete]
     resources "/events", EventController, except: [:new, :edit]
     resources "/events_users", Events_UsersController, except: [:new, :edit]
   end
