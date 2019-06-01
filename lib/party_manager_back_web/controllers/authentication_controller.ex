@@ -8,7 +8,7 @@ defmodule PartyManagerBackWeb.AuthenticationController do
 
   def create(conn, %{"session" => sessions_params}) do
     user = Party.get_by_email(sessions_params["email"])
-    if Comeonin.Bcrypt.checkpw(sessions_params["password"], user.password) do
+    if !!user and Comeonin.Bcrypt.checkpw(sessions_params["password"], user.password) do
       {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user)
       conn
       |> render("sign_in.json", %{user: user, jwt: jwt})
