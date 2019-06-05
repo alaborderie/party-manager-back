@@ -1,4 +1,5 @@
 defmodule PartyManagerBack.Party.Group do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

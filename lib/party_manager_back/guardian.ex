@@ -1,4 +1,5 @@
 defmodule PartyManagerBack.Guardian do
+  @moduledoc false
   use Guardian, otp_app: :party_manager_back
 
   def subject_for_token(resource, _claims) do

@@ -199,61 +199,61 @@ defmodule PartyManagerBack.PartyTest do
   end
 
   describe "events_users" do
-    alias PartyManagerBack.Party.Events_Users
+    alias PartyManagerBack.Party.EventsUsers
 
     @valid_attrs %{is_going: true}
     @update_attrs %{is_going: false}
     @invalid_attrs %{is_going: nil}
 
-    def events__users_fixture(attrs \\ %{}) do
-      {:ok, events__users} =
+    def events_users_fixture(attrs \\ %{}) do
+      {:ok, events_users} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Party.create_events__users()
+        |> Party.create_events_users()
 
-      events__users
+      events_users
     end
 
     test "list_events_users/0 returns all events_users" do
-      events__users = events__users_fixture()
-      assert Party.list_events_users() == [events__users]
+      events_users = events_users_fixture()
+      assert Party.list_events_users() == [events_users]
     end
 
-    test "get_events__users!/1 returns the events__users with given id" do
-      events__users = events__users_fixture()
-      assert Party.get_events__users!(events__users.id) == events__users
+    test "get_events_users!/1 returns the events_users with given id" do
+      events_users = events_users_fixture()
+      assert Party.get_events_users!(events_users.id) == events_users
     end
 
-    test "create_events__users/1 with valid data creates a events__users" do
-      assert {:ok, %Events_Users{} = events__users} = Party.create_events__users(@valid_attrs)
-      assert events__users.is_going == true
+    test "create_events_users/1 with valid data creates a events_users" do
+      assert {:ok, %EventsUsers{} = events_users} = Party.create_events_users(@valid_attrs)
+      assert events_users.is_going == true
     end
 
-    test "create_events__users/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Party.create_events__users(@invalid_attrs)
+    test "create_events_users/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Party.create_events_users(@invalid_attrs)
     end
 
-    test "update_events__users/2 with valid data updates the events__users" do
-      events__users = events__users_fixture()
-      assert {:ok, %Events_Users{} = events__users} = Party.update_events__users(events__users, @update_attrs)
-      assert events__users.is_going == false
+    test "update_events_users/2 with valid data updates the events_users" do
+      events_users = events_users_fixture()
+      assert {:ok, %EventsUsers{} = events_users} = Party.update_events_users(events_users, @update_attrs)
+      assert events_users.is_going == false
     end
 
-    test "update_events__users/2 with invalid data returns error changeset" do
-      events__users = events__users_fixture()
-      assert {:error, %Ecto.Changeset{}} = Party.update_events__users(events__users, @invalid_attrs)
-      assert events__users == Party.get_events__users!(events__users.id)
+    test "update_events_users/2 with invalid data returns error changeset" do
+      events_users = events_users_fixture()
+      assert {:error, %Ecto.Changeset{}} = Party.update_events_users(events_users, @invalid_attrs)
+      assert events_users == Party.get_events_users!(events_users.id)
     end
 
-    test "delete_events__users/1 deletes the events__users" do
-      events__users = events__users_fixture()
-      assert {:ok, %Events_Users{}} = Party.delete_events__users(events__users)
-      assert_raise Ecto.NoResultsError, fn -> Party.get_events__users!(events__users.id) end
+    test "delete_events_users/1 deletes the events_users" do
+      events_users = events_users_fixture()
+      assert {:ok, %EventsUsers{}} = Party.delete_events_users(events_users)
+      assert_raise Ecto.NoResultsError, fn -> Party.get_events_users!(events_users.id) end
     end
 
-    test "change_events__users/1 returns a events__users changeset" do
-      events__users = events__users_fixture()
-      assert %Ecto.Changeset{} = Party.change_events__users(events__users)
+    test "change_events_users/1 returns a events_users changeset" do
+      events_users = events_users_fixture()
+      assert %Ecto.Changeset{} = Party.change_events_users(events_users)
     end
   end
 end

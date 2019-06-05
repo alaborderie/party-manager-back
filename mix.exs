@@ -46,7 +46,8 @@ defmodule PartyManagerBack.MixProject do
       {:guardian, "~> 1.0"},
       {:cors_plug, "~> 2.0"},
       {:ex_url, "~> 1.1"},
-      {:httpoison, "~> 1.4"}
+      {:httpoison, "~> 1.4"},
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 

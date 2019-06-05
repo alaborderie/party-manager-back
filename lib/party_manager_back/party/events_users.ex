@@ -1,4 +1,5 @@
-defmodule PartyManagerBack.Party.Events_Users do
+defmodule PartyManagerBack.Party.EventsUsers do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -11,8 +12,8 @@ defmodule PartyManagerBack.Party.Events_Users do
   end
 
   @doc false
-  def changeset(events__users, attrs) do
-    events__users
+  def changeset(events_users, attrs) do
+    events_users
     |> cast(attrs, [:is_going])
     |> validate_required([:is_going])
   end

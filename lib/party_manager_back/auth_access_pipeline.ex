@@ -1,4 +1,5 @@
 defmodule PartyManagerBack.AuthAccessPipeline do
+  @moduledoc false
   use Guardian.Plug.Pipeline, otp_app: :party_manager_back
 
   plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}

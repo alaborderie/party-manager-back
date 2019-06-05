@@ -22,7 +22,7 @@ defmodule PartyManagerBackWeb.Router do
     resources "/users", UserController, except: [:new, :edit, :create]
     resources "/groups", GroupController, except: [:new, :edit, :delete]
     resources "/events", EventController, except: [:new, :edit]
-    resources "/events_users", Events_UsersController, except: [:new, :edit]
+    resources "/events_users", EventsUsersController, except: [:new, :edit]
   end
 
   pipeline :browser do
