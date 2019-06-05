@@ -28,7 +28,8 @@ defmodule PartyManagerBackWeb.EventsUsersController do
   def update(conn, %{"id" => id, "events_users" => events_users_params}) do
     events_users = Party.get_events_users!(id)
 
-    with {:ok, %EventsUsers{} = events_users} <- Party.update_events_users(events_users, events_users_params) do
+    with {:ok, %EventsUsers{} = events_users} <-
+           Party.update_events_users(events_users, events_users_params) do
       render(conn, "show.json", events_users: events_users)
     end
   end

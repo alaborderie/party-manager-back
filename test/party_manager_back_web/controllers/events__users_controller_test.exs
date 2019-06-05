@@ -50,8 +50,15 @@ defmodule PartyManagerBackWeb.EventsUsersControllerTest do
   describe "update events_users" do
     setup [:create_events_users]
 
-    test "renders events_users when data is valid", %{conn: conn, events_users: %EventsUsers{id: id} = events_users} do
-      conn = put(conn, Routes.events_users_path(conn, :update, events_users), events_users: @update_attrs)
+    test "renders events_users when data is valid", %{
+      conn: conn,
+      events_users: %EventsUsers{id: id} = events_users
+    } do
+      conn =
+        put(conn, Routes.events_users_path(conn, :update, events_users),
+          events_users: @update_attrs
+        )
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.events_users_path(conn, :show, id))
@@ -63,7 +70,11 @@ defmodule PartyManagerBackWeb.EventsUsersControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, events_users: events_users} do
-      conn = put(conn, Routes.events_users_path(conn, :update, events_users), events_users: @invalid_attrs)
+      conn =
+        put(conn, Routes.events_users_path(conn, :update, events_users),
+          events_users: @invalid_attrs
+        )
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

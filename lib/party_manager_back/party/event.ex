@@ -19,7 +19,16 @@ defmodule PartyManagerBack.Party.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :description, :background_img, :start_date, :end_date, :place, :group, :creator])
+    |> cast(attrs, [
+      :name,
+      :description,
+      :background_img,
+      :start_date,
+      :end_date,
+      :place,
+      :group,
+      :creator
+    ])
     |> validate_required([:name, :description, :start_date, :end_date])
   end
 end

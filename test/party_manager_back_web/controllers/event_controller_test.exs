@@ -20,7 +20,14 @@ defmodule PartyManagerBackWeb.EventControllerTest do
     place: "some updated place",
     start_date: ~D[2011-05-18]
   }
-  @invalid_attrs %{background_img: nil, description: nil, end_date: nil, name: nil, place: nil, start_date: nil}
+  @invalid_attrs %{
+    background_img: nil,
+    description: nil,
+    end_date: nil,
+    name: nil,
+    place: nil,
+    start_date: nil
+  }
 
   def fixture(:event) do
     {:ok, event} = Party.create_event(@create_attrs)

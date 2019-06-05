@@ -7,7 +7,7 @@ defmodule PartyManagerBackWeb.AuthenticationView do
       data: %{
         token: jwt,
         user_id: user.id
-      },
+      }
     }
   end
 end

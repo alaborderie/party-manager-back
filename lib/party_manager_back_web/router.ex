@@ -3,9 +3,11 @@ defmodule PartyManagerBackWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
     plug Guardian.Plug.Pipeline,
       module: PartyManagerBack.Guardian,
       error_handler: PartyManagerBack.AuthErrorHandler
+
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource, allow_blank: true
   end
@@ -18,7 +20,7 @@ defmodule PartyManagerBackWeb.Router do
     pipe_through :api
     resources "/subscribe", UserController, only: [:create]
     resources "/login", AuthenticationController, only: [:create, :delete]
-    if System.get_env("PARTY_MANAGER_PROD"), do: pipe_through :authenticated
+    if System.get_env("PARTY_MANAGER_PROD"), do: pipe_through(:authenticated)
     resources "/users", UserController, except: [:new, :edit, :create]
     resources "/groups", GroupController, except: [:new, :edit, :delete]
     resources "/events", EventController, except: [:new, :edit]
@@ -33,5 +35,4 @@ defmodule PartyManagerBackWeb.Router do
     pipe_through :browser
     get "/", DefaultController, :index
   end
-
 end

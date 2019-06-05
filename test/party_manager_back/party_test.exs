@@ -6,8 +6,17 @@ defmodule PartyManagerBack.PartyTest do
   describe "users" do
     alias PartyManagerBack.Party.User
 
-    @valid_attrs %{first_name: "some first_name", last_name: "some last_name", email: "some email", password: "some password"}
-    @update_attrs %{first_name: "some updated first_name", last_name: "some updated last_name", email: "some updated email"}
+    @valid_attrs %{
+      first_name: "some first_name",
+      last_name: "some last_name",
+      email: "some email",
+      password: "some password"
+    }
+    @update_attrs %{
+      first_name: "some updated first_name",
+      last_name: "some updated last_name",
+      email: "some updated email"
+    }
     @invalid_attrs %{first_name: nil, last_name: nil, email: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -69,8 +78,16 @@ defmodule PartyManagerBack.PartyTest do
   describe "groups" do
     alias PartyManagerBack.Party.Group
 
-    @valid_attrs %{background_img: "some background_img", description: "some description", name: "some name"}
-    @update_attrs %{background_img: "some updated background_img", description: "some updated description", name: "some updated name"}
+    @valid_attrs %{
+      background_img: "some background_img",
+      description: "some description",
+      name: "some name"
+    }
+    @update_attrs %{
+      background_img: "some updated background_img",
+      description: "some updated description",
+      name: "some updated name"
+    }
     @invalid_attrs %{background_img: nil, description: nil, name: nil}
 
     def group_fixture(attrs \\ %{}) do
@@ -132,9 +149,30 @@ defmodule PartyManagerBack.PartyTest do
   describe "events" do
     alias PartyManagerBack.Party.Event
 
-    @valid_attrs %{background_img: "some background_img", description: "some description", end_date: ~D[2010-04-17], name: "some name", place: "some place", start_date: ~D[2010-04-17]}
-    @update_attrs %{background_img: "some updated background_img", description: "some updated description", end_date: ~D[2011-05-18], name: "some updated name", place: "some updated place", start_date: ~D[2011-05-18]}
-    @invalid_attrs %{background_img: nil, description: nil, end_date: nil, name: nil, place: nil, start_date: nil}
+    @valid_attrs %{
+      background_img: "some background_img",
+      description: "some description",
+      end_date: ~D[2010-04-17],
+      name: "some name",
+      place: "some place",
+      start_date: ~D[2010-04-17]
+    }
+    @update_attrs %{
+      background_img: "some updated background_img",
+      description: "some updated description",
+      end_date: ~D[2011-05-18],
+      name: "some updated name",
+      place: "some updated place",
+      start_date: ~D[2011-05-18]
+    }
+    @invalid_attrs %{
+      background_img: nil,
+      description: nil,
+      end_date: nil,
+      name: nil,
+      place: nil,
+      start_date: nil
+    }
 
     def event_fixture(attrs \\ %{}) do
       {:ok, event} =
@@ -235,7 +273,10 @@ defmodule PartyManagerBack.PartyTest do
 
     test "update_events_users/2 with valid data updates the events_users" do
       events_users = events_users_fixture()
-      assert {:ok, %EventsUsers{} = events_users} = Party.update_events_users(events_users, @update_attrs)
+
+      assert {:ok, %EventsUsers{} = events_users} =
+               Party.update_events_users(events_users, @update_attrs)
+
       assert events_users.is_going == false
     end
 

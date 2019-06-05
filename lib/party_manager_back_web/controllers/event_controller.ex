@@ -13,16 +13,23 @@ defmodule PartyManagerBackWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params, "tmdb" => tmdb_params}) do
-    background_url = if !!tmdb_params do
-      url = "https://api.themoviedb.org/3/search/movie?api_key=341cc10a4e7d1530cf23d11cee7b9720&language=fr_fr&page=17include_adult=true&query=" <> tmdb_params["movie"]
-      response = HTTPoison.get!(url)
-      req = Jason.decode!(response.body)
-      if !req["error"] do
-        poster_path = Enum.at(req["results"], 0)["poster_path"]
-        "https://image.tmdb.org/t/p/w500" <> poster_path
+    background_url =
+      if !!tmdb_params do
+        url =
+          "https://api.themoviedb.org/3/search/movie?api_key=341cc10a4e7d1530cf23d11cee7b9720&language=fr_fr&page=17include_adult=true&query=" <>
+            tmdb_params["movie"]
+
+        response = HTTPoison.get!(url)
+        req = Jason.decode!(response.body)
+
+        if !req["error"] do
+          poster_path = Enum.at(req["results"], 0)["poster_path"]
+          "https://image.tmdb.org/t/p/w500" <> poster_path
+        end
       end
-    end
+
     event_params_updated = Map.put(event_params, "background_img", background_url)
+
     with {:ok, %Event{} = event} <- Party.create_event(event_params_updated) do
       conn
       |> put_status(:created)

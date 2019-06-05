@@ -11,12 +11,14 @@ defmodule PartyManagerBackWeb.EventView do
   end
 
   def render("event.json", %{event: event}) do
-    %{id: event.id,
+    %{
+      id: event.id,
       name: event.name,
       description: event.description,
       background_img: event.background_img,
       start_date: event.start_date,
       end_date: event.end_date,
-      place: event.place}
+      place: event.place
+    }
   end
 end

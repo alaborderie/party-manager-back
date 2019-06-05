@@ -11,7 +11,6 @@ defmodule PartyManagerBackWeb.EventsUsersView do
   end
 
   def render("events_users.json", %{events_users: events_users}) do
-    %{id: events_users.id,
-      is_going: events_users.is_going}
+    %{id: events_users.id, is_going: events_users.is_going}
   end
 end

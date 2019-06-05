@@ -9,6 +9,5 @@ defmodule PartyManagerBack.Repo.Migrations.CreateGroups do
 
       timestamps()
     end
-
   end
 end

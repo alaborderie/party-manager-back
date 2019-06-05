@@ -10,7 +10,10 @@ defmodule PartyManagerBack.Party.Group do
         file_name = to_string(System.system_time(:millisecond)) <> "." <> "jpeg"
         file_url = "priv/static/images/" <> file_name
         File.write!(file_url, data)
-        hostname = Application.get_env(:party_manager_back, PartyManagerBackWeb.Endpoint)[:url][:host]
+
+        hostname =
+          Application.get_env(:party_manager_back, PartyManagerBackWeb.Endpoint)[:url][:host]
+
         port = Application.get_env(:party_manager_back, PartyManagerBackWeb.Endpoint)[:url][:port]
         "http://" <> hostname <> ":" <> to_string(port) <> "/images/" <> file_name
       end

@@ -11,9 +11,11 @@ defmodule PartyManagerBackWeb.GroupView do
   end
 
   def render("group.json", %{group: group}) do
-    %{id: group.id,
+    %{
+      id: group.id,
       name: group.name,
       description: group.description,
-      background_img: group.background_img}
+      background_img: group.background_img
+    }
   end
 end
