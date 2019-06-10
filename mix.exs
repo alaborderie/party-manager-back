@@ -36,6 +36,7 @@ defmodule PartyManagerBack.MixProject do
       {:phoenix, "~> 1.4.6"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
+      {:phoenix_html, "~> 2.13.3"},
       {:ecto_sql, "~> 3.0"},
       {:mariaex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
@@ -47,6 +48,9 @@ defmodule PartyManagerBack.MixProject do
       {:cors_plug, "~> 2.0"},
       {:ex_url, "~> 1.1"},
       {:httpoison, "~> 1.4"},
+      {:bamboo, "~> 1.2", override: true},
+      {:poison, ">= 1.5.0"},
+      {:bamboo_mailjet, "~> 0.0.1"},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.4", only: [:dev]}
     ]

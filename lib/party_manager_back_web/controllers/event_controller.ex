@@ -31,6 +31,8 @@ defmodule PartyManagerBackWeb.EventController do
     event_params_updated = Map.put(event_params, "background_img", background_url)
 
     with {:ok, %Event{} = event} <- Party.create_event(event_params_updated) do
+      Party.send_emails(event)
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.event_path(conn, :show, event))

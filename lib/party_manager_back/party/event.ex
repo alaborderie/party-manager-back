@@ -29,6 +29,6 @@ defmodule PartyManagerBack.Party.Event do
       :group,
       :creator
     ])
-    |> validate_required([:name, :description, :start_date, :end_date])
+    |> validate_required([:name, :description, :start_date, :end_date, :group, :creator])
   end
 end

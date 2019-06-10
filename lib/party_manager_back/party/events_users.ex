@@ -15,6 +15,6 @@ defmodule PartyManagerBack.Party.EventsUsers do
   def changeset(events_users, attrs) do
     events_users
     |> cast(attrs, [:is_going])
-    |> validate_required([:is_going])
+    |> validate_required([:is_going, :user, :event])
   end
 end

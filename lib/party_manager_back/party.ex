@@ -402,4 +402,123 @@ defmodule PartyManagerBack.Party do
   def change_events_users(%EventsUsers{} = events_users) do
     EventsUsers.changeset(events_users, %{})
   end
+
+  alias PartyManagerBack.Party.GroupUser
+
+  @doc """
+  Returns a list of groups_users by group ID
+  """
+  def get_group_users_by_group!(group_id) do
+    Repo.all(GroupUser, group: group_id)
+  end
+
+  @doc """
+  Send a mail to each user of the created event
+  """
+  def send_emails(%Event{} = event) do
+    group_users =
+      Enum.reject(get_group_users_by_group!(event.group), fn x -> x.user == event.creator end)
+
+    Enum.each(group_users, fn x ->
+      group = get_group!(x.group)
+      user = get_user!(x.user)
+
+      email = PartyManagerBack.Email.send_email(user, group)
+      PartyManagerBack.Mailer.deliver_now(email)
+    end)
+  end
+
+  @doc """
+  Returns the list of groups_users.
+
+  ## Examples
+
+      iex> list_groups_users()
+      [%GroupUser{}, ...]
+
+  """
+  def list_groups_users do
+    Repo.all(GroupUser)
+  end
+
+  @doc """
+  Gets a single group_user.
+
+  Raises `Ecto.NoResultsError` if the Group user does not exist.
+
+  ## Examples
+
+      iex> get_group_user!(123)
+      %GroupUser{}
+
+      iex> get_group_user!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_group_user!(id), do: Repo.get!(GroupUser, id)
+
+  @doc """
+  Creates a group_user.
+
+  ## Examples
+
+      iex> create_group_user(%{field: value})
+      {:ok, %GroupUser{}}
+
+      iex> create_group_user(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_group_user(attrs \\ %{}) do
+    %GroupUser{}
+    |> GroupUser.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a group_user.
+
+  ## Examples
+
+      iex> update_group_user(group_user, %{field: new_value})
+      {:ok, %GroupUser{}}
+
+      iex> update_group_user(group_user, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_group_user(%GroupUser{} = group_user, attrs) do
+    group_user
+    |> GroupUser.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a GroupUser.
+
+  ## Examples
+
+      iex> delete_group_user(group_user)
+      {:ok, %GroupUser{}}
+
+      iex> delete_group_user(group_user)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_group_user(%GroupUser{} = group_user) do
+    Repo.delete(group_user)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking group_user changes.
+
+  ## Examples
+
+      iex> change_group_user(group_user)
+      %Ecto.Changeset{source: %GroupUser{}}
+
+  """
+  def change_group_user(%GroupUser{} = group_user) do
+    GroupUser.changeset(group_user, %{})
+  end
 end

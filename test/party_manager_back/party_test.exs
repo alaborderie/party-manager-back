@@ -297,4 +297,65 @@ defmodule PartyManagerBack.PartyTest do
       assert %Ecto.Changeset{} = Party.change_events_users(events_users)
     end
   end
+
+  describe "groups_users" do
+    alias PartyManagerBack.Party.GroupUser
+
+    @valid_attrs %{group: 42, user: 42}
+    @update_attrs %{group: 43, user: 43}
+    @invalid_attrs %{group: nil, user: nil}
+
+    def group_user_fixture(attrs \\ %{}) do
+      {:ok, group_user} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Party.create_group_user()
+
+      group_user
+    end
+
+    test "list_groups_users/0 returns all groups_users" do
+      group_user = group_user_fixture()
+      assert Party.list_groups_users() == [group_user]
+    end
+
+    test "get_group_user!/1 returns the group_user with given id" do
+      group_user = group_user_fixture()
+      assert Party.get_group_user!(group_user.id) == group_user
+    end
+
+    test "create_group_user/1 with valid data creates a group_user" do
+      assert {:ok, %GroupUser{} = group_user} = Party.create_group_user(@valid_attrs)
+      assert group_user.group == 42
+      assert group_user.user == 42
+    end
+
+    test "create_group_user/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Party.create_group_user(@invalid_attrs)
+    end
+
+    test "update_group_user/2 with valid data updates the group_user" do
+      group_user = group_user_fixture()
+      assert {:ok, %GroupUser{} = group_user} = Party.update_group_user(group_user, @update_attrs)
+      assert group_user.group == 43
+      assert group_user.user == 43
+    end
+
+    test "update_group_user/2 with invalid data returns error changeset" do
+      group_user = group_user_fixture()
+      assert {:error, %Ecto.Changeset{}} = Party.update_group_user(group_user, @invalid_attrs)
+      assert group_user == Party.get_group_user!(group_user.id)
+    end
+
+    test "delete_group_user/1 deletes the group_user" do
+      group_user = group_user_fixture()
+      assert {:ok, %GroupUser{}} = Party.delete_group_user(group_user)
+      assert_raise Ecto.NoResultsError, fn -> Party.get_group_user!(group_user.id) end
+    end
+
+    test "change_group_user/1 returns a group_user changeset" do
+      group_user = group_user_fixture()
+      assert %Ecto.Changeset{} = Party.change_group_user(group_user)
+    end
+  end
 end
