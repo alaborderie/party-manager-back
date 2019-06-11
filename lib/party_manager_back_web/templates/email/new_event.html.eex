@@ -1,7 +1,14 @@
-<p>
-    Hello <%= @user %>! Someone created an event in your group <%= @group %>!
-</p>
-<p>
-    Be sure to log in today to not miss a new party with your friends ;)
-</p>
-<p>- The PartyManager Team.</p>
+<div class="container">
+    <div class="header">
+        <div class="text-center my-auto">PartyManager</div>
+    </div>
+    <div class="container text-center">
+        <p>
+            Bonjour <%= @user %> ! Un nouvel événement a été créé dans votre groupe "<%= @group %>"!
+        </p>
+        <p>
+            Connectez-vous pour ne pas le louper !
+        </p>
+        <p class="footer">- The PartyManager Team.</p>
+    </div>
+</div>
