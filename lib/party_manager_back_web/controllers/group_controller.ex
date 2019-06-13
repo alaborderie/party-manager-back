@@ -22,7 +22,11 @@ defmodule PartyManagerBackWeb.GroupController do
 
   def show(conn, %{"id" => id}) do
     group = Party.get_group!(id)
-    render(conn, "show.json", group: group)
+    events = Party.list_events_for_group(group.id)
+    IO.inspect(events)
+    result = Map.put(group, :events, events)
+    IO.inspect(result)
+    render(conn, "show.json", group: result)
   end
 
   def update(conn, %{"id" => id, "group" => group_params}) do

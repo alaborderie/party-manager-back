@@ -55,7 +55,7 @@ defmodule PartyManagerBackWeb.UserController do
         |> put_status(:bad_request)
         |> json(%{message: "Bad email format", error_field: "email"})
 
-      Party.get_by_email(user_params["email"]) != nil ->
+      Party.user_exists?(user_params["email"]) ->
         conn
         |> put_status(:conflict)
         |> json(%{

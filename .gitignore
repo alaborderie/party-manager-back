@@ -32,3 +32,6 @@ party_manager_back-*.tar
 # Jetbrains IDEA
 /.idea/
 /*.iml
+
+# Ignore scripts containing env variables
+*.sh

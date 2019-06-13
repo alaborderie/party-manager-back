@@ -51,6 +51,17 @@ defmodule PartyManagerBack.Party do
   end
 
   @doc """
+  Check if user already exists by checking his email.
+  """
+  def user_exists?(email) when is_nil(email) do
+    false
+  end
+
+  def user_exists?(email) do
+    Repo.exists?(User, email: email)
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples
@@ -224,6 +235,13 @@ defmodule PartyManagerBack.Party do
   """
   def list_events do
     Repo.all(Event)
+  end
+
+  @doc """
+  List events for the given group
+  """
+  def list_events_for_group(group_id) do
+    Repo.all(Event, group: group_id)
   end
 
   @doc """
