@@ -440,7 +440,6 @@ defmodule PartyManagerBack.Party do
     Enum.each(group_users, fn x ->
       group = get_group!(x.group)
       user = get_user!(x.user)
-
       email = PartyManagerBack.Email.send_email(user, group)
       PartyManagerBack.Mailer.deliver_now(email)
     end)

@@ -11,26 +11,35 @@ defmodule PartyManagerBackWeb.GroupView do
   end
 
   def render("group.json", %{group: group}) do
-    %{
-      id: group.id,
-      name: group.name,
-      description: group.description,
-      background_img: group.background_img,
-      events:
-        Enum.map(
-          group.events,
-          fn event ->
-            %{
-              id: event.id,
-              name: event.name,
-              description: event.description,
-              background_img: event.background_img,
-              start_date: event.start_date,
-              end_date: event.end_date,
-              place: event.place
-            }
-          end
-        )
-    }
+    if Map.has_key?(group, :events) do
+      %{
+        id: group.id,
+        name: group.name,
+        description: group.description,
+        background_img: group.background_img,
+        events:
+          Enum.map(
+            group.events,
+            fn event ->
+              %{
+                id: event.id,
+                name: event.name,
+                description: event.description,
+                background_img: event.background_img,
+                start_date: event.start_date,
+                end_date: event.end_date,
+                place: event.place
+              }
+            end
+          )
+      }
+    else
+      %{
+        id: group.id,
+        name: group.name,
+        description: group.description,
+        background_img: group.background_img
+      }
+    end
   end
 end

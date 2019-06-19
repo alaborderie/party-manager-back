@@ -4,7 +4,7 @@ defmodule PartyManagerBackWeb.GroupController do
   alias PartyManagerBack.Party
   alias PartyManagerBack.Party.Group
 
-  action_fallback PartyManagerBackWeb.FallbackController
+  action_fallback(PartyManagerBackWeb.FallbackController)
 
   def index(conn, _params) do
     groups = Party.list_groups()
@@ -23,9 +23,7 @@ defmodule PartyManagerBackWeb.GroupController do
   def show(conn, %{"id" => id}) do
     group = Party.get_group!(id)
     events = Party.list_events_for_group(group.id)
-    IO.inspect(events)
     result = Map.put(group, :events, events)
-    IO.inspect(result)
     render(conn, "show.json", group: result)
   end
 
